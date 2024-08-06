@@ -38,11 +38,11 @@ class App extends React.Component {
     location: "",
     isLoading: false,
     weather: {},
-    // displayLocation: "",
-    displayLocation: {
-      city: "",
-      flag: "",
-    },
+    displayLocation: "",
+    // displayLocation: {
+    //   city: "",
+    //   flag: "",
+    // },
   };
 
   // async fetchWeather() {
@@ -63,15 +63,15 @@ class App extends React.Component {
       const { latitude, longitude, timezone, name, country_code } =
         geoData.results.at(0);
 
-      // this.setState({
-      //   displayLocation: `${name} ${convertToFlag(country_code)}`,
-      // });
       this.setState({
-        displayLocation: {
-          city: name,
-          flag: country_code.toLowerCase(),
-        },
+        displayLocation: `${name} ${convertToFlag(country_code)}`,
       });
+      // this.setState({
+      //   displayLocation: {
+      //     city: name,
+      //     flag: country_code.toLowerCase(),
+      //   },
+      // });
       // 2) Getting actual weather
       const weatherRes = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&timezone=${timezone}&daily=weathercode,temperature_2m_max,temperature_2m_min`
@@ -115,9 +115,9 @@ class App extends React.Component {
         {this.state.weather.weathercode && (
           <Weather
             weather={this.state.weather}
-            flag={this.state.displayLocation.flag}
-            city={this.state.displayLocation.city}
-            // location={this.state.displayLocation}
+            // flag={this.state.displayLocation.flag}
+            // city={this.state.displayLocation.city}
+            location={this.state.displayLocation}
           />
         )}
       </div>
@@ -154,11 +154,11 @@ class Weather extends React.Component {
     return (
       <div>
         <h2>
-          Weather {this.props.city} &nbsp;
-          <img
+          Weather {this.props.location}{" "}
+          {/* <img
             src={`https://flagcdn.com/24x18/${this.props.flag}.png`}
             alt="country flag"
-          />
+          /> */}
         </h2>
         <ul className="weather">
           {dates.map((date, i) => (
